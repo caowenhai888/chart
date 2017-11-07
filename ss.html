@@ -1,0 +1,230 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="Generator" content="EditPlus®">
+    <meta name="Author" content="">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <title>Document</title>
+</head>
+<body>
+<div>
+    <canvas id="canvas" height="265" width="900"></canvas>
+</div>
+</body>
+<script src="http://www.jinrongshu.cn/statics/tree/qz/js/jquery.js"></script>
+<script>
+    var computeDimension = function(element,dimension){
+        if (element['offset'+dimension]){
+            return element['offset'+dimension];
+        } else {
+            return document.defaultView.getComputedStyle(element).getPropertyValue(dimension);
+        }
+    };
+
+    window.onresize = function(){
+        resizefn();
+    };
+    window.onload = function(){
+        resizefn();
+    };
+    function resizefn(){
+        var iWidth=document.documentElement.getBoundingClientRect().width;iWidth=iWidth>640?640:iWidth;
+        document.getElementsByTagName("html")[0].style.fontSize=iWidth/10+"px";
+        document.body.style.opacity = 1;
+    };
+    var hehe = {
+        ctx : document.getElementById("canvas").getContext("2d"),
+        data :
+                [{'week':1,'max':2000,'real':1000},
+                    {'week':2,'max':1000,'real':800},
+                    {'week':3,'max':1000,'real':800},
+                    {'week':4,'max':500,'real':400}],
+        Hlines : 6,
+        radius : 8,
+        inited : false,
+        points : function(){
+            if(!this.inited){
+                this.init();
+            }
+            var point_data = [];
+            var width = this.width,
+                    height = this.height,
+                    W = this.data.length + 1;
+            for(var i=0; i < this.data.length; i++){
+                X = ~~(width/W*(i+1));
+                Y = height - ~~(this.data[i].real/this.data[i].max*height);
+                point_data.push({'x':X,'y':Y});
+            }
+            return point_data;
+        },
+        in_point : function(x,y){
+            var points = this.points();
+            for(var i=0; i < points.length; i++){
+                var tx = x - points[i].x;
+                var ty = y - points[i].y;
+                console.log(tx,ty,x ,points[i].x,'ss');
+                tx = Math.abs(tx);
+                ty = Math.abs(ty);
+
+
+                if(tx<=this.radius && ty<=this.radius){
+                    return true;
+                }
+            }
+            return false;
+        },
+        init : function(){
+            var __ctx = this.ctx;
+            this.width = computeDimension(__ctx.canvas,'Width') || __ctx.canvas.width;
+            this.height = computeDimension(__ctx.canvas,'Height') || __ctx.canvas.height;
+            this.inited = true;
+        },
+        draw:function(){
+            this.ctx.clearRect(0, 0, this.width, this.height);
+            this.drawtable();
+            this.drawimg();
+            this.drawcircle();
+        },
+        drawtable:function(){
+            var width = this.width,
+                    height = this.height,
+                    W = this.data.length + 1,
+                    H = this.Hlines;
+            var __ctx = this.ctx;
+            __ctx.lineWidth=1;
+            __ctx.strokeStyle = "rgba(200,200,200,1)";
+            for (var i = 1; i <= 4 ; i++){
+                var X = ~~(width/W*i);
+                __ctx.moveTo(X,0);
+                __ctx.lineTo(X,height);
+            }
+            for (var j = 1; j <= 5 ; j++){
+                var Y = ~~(height/H*j);
+                __ctx.moveTo(0,Y);
+                __ctx.lineTo(width,Y);
+            }
+            __ctx.stroke();
+        },
+        drawimg:function(){
+            var __ctx = this.ctx;
+            __ctx.lineCap = ' round'
+            __ctx.fillStyle = "rgba(200,200,200,0.3)";
+            __ctx.strokeStyle = "rgba(200,200,200,1)";
+            __ctx.lineWidth=5;
+            __ctx.beginPath();
+            var W = this.data.length + 1,
+                    width = this.width,
+                    height = this.height,
+                    old_X,
+                    old_Y,
+                    m_X,
+                    m_Y,
+                    mm_X,
+                    mm_Y,
+                    X = 0,
+                    Y = height;
+            __ctx.moveTo(X,Y);
+
+            for(var i=0; i < this.data.length; i++){
+                old_X = X;
+                old_Y = Y;
+                X = ~~(width/W*(i+1));
+                Y = height - ~~(this.data[i].real/this.data[i].max*height);
+                if(old_Y == Y){
+                    __ctx.lineTo(X, Y);
+                }else{
+                    m_X = ~~((X+old_X)/2);
+                    m_Y = old_Y-1;
+                    mm_X = ~~((X+old_X)/2);
+                    mm_Y = Y+1;
+                    __ctx.bezierCurveTo(m_X, m_Y, mm_X, mm_Y, X, Y);
+                }
+            }
+            old_X = X;
+            old_Y = Y;
+            X = width;
+            Y = height;
+            if(old_Y == Y){
+                __ctx.lineTo(X, Y);
+            }else{
+                m_X = ~~((X+old_X)/2);
+                m_Y = old_Y-1;
+                mm_X = ~~((X+old_X)/2);
+                mm_Y =Y+1;
+                __ctx.bezierCurveTo(m_X, m_Y, mm_X, mm_Y, X, Y);
+            }
+            __ctx.stroke();
+            __ctx.lineTo(0, height);
+            __ctx.closePath();
+            __ctx.fill();
+
+        },
+        drawcircle: function(){
+            var __ctx = this.ctx;
+            var W = this.data.length + 1,
+                    width = this.width,
+                    height = this.height,
+                    X,
+                    Y;
+            for(var i=0; i < this.data.length; i++){
+                X = ~~(width/W*(i+1));
+                Y = height - ~~(this.data[i].real/this.data[i].max*height);
+                __ctx.fillStyle = "rgba(100,100,100,1)";
+                __ctx.beginPath();
+                __ctx.arc(X,Y,8,0,2*Math.PI);
+                __ctx.closePath();
+                __ctx.fill();
+                __ctx.fillStyle = "rgba(255,255,255,1)";
+                __ctx.beginPath();
+                __ctx.arc(X,Y,6,0,2*Math.PI);
+                __ctx.closePath();
+                __ctx.fill();
+            }
+        },
+        animation:function(){
+            var data = (new Function('return '+JSON.stringify(this.data) ) )();
+
+            function resizedata(rata){
+                var temp = (new Function('return '+JSON.stringify(data) ) )();
+                for (var i in temp)
+                {
+                    temp[i]['real'] *= rata;
+                }
+                return temp;
+            }
+            var i = 1;
+            var that = this;
+            function run(){
+                var counter = 20;
+                var tmp;
+                var timehelper;//如果需要清除 可以使用
+                that.data = resizedata(i/counter);
+                if(i<=counter){
+                    that.draw();
+                    tmp = Math.pow(1.5,i++);
+                    timehelper = setTimeout(run,250/tmp);
+                }else{
+                    that.data = (new Function('return '+JSON.stringify(data) ) )();
+                }
+            }
+            run();
+        }
+    }
+
+    hehe.init();
+    hehe.animation();
+
+    $(function(){
+        $('#canvas').click(function(e){
+            var x = e.pageX - $(this).offset().left;
+            var y = e.pageY - $(this).offset().top;
+            if(hehe.in_point(x,y)){
+                alert('hehe');
+            }
+        });
+    })
+</script>
+</html>

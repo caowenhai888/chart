@@ -1,0 +1,269 @@
+
+
+html{
+    font-size: 35px;
+}
+
+
+
+.cost_head{
+    height: 8.25rem;
+    background: #feb137;
+    color: #fff;
+    text-align: center;
+}
+
+.cost_head .title{
+    font-size: 0.6rem;
+    padding-top: 0.55rem;
+    position: relative;
+
+}
+.cost_head .title .more{
+    position: absolute;
+    right: 0.5rem;
+    top: 0.5rem;
+}
+
+.cost_head h1{
+    font-family: dincondensedcregular;
+    font-size: 2.5rem;
+    padding-top: 0.75rem;
+}
+
+.cost_head .describe{
+    padding-top: 0.25rem;
+    font-size: 0.5rem;
+}
+
+.cost_list{
+    padding-top:0.5rem ;
+}
+
+.cost_list ul {
+    display: table;
+    width: 100%;
+}
+
+.cost_list ul li{
+    display: table-cell;
+    position: relative;
+}
+.cost_list ul li p:first-child{
+    font-family: Arial;
+    font-size: 0.9rem;
+}
+.cost_list ul li p:last-child{
+    font-size: 0.55rem;
+    padding-top: 0.375rem;
+}
+.cost_modify_btn{
+    border-radius: 5px;
+    border: 2px solid #fff;
+    color: #fff;
+    display: inline-block;
+    font-size: 0.45rem;
+
+    padding:  0.1rem 0.2rem;
+    vertical-align: middle;
+    margin-left: 0.5rem;
+}
+.v_mid{ vertical-align: middle;}
+
+.cost_radio{
+    position: absolute;
+    right: 0;
+
+}
+
+
+
+
+.cost_list ul li:first-child p:first-child:after{
+     content: '';
+     display: inline-block;
+     position: absolute;
+     width: 0.15rem;
+     height: 0.15rem;
+     border-radius: 50%;
+     background: rgba(255,255,266,0.6);
+     right: 0px;
+     top: 0.55rem;
+ }
+.cost_list ul li:first-child p:first-child:before{
+    content: '';
+    display: inline-block;
+    position: absolute;
+    width: 0.15rem;
+    height: 0.15rem;
+    border-radius: 50%;
+    background: rgba(255,255,266,0.6);
+    right: 0px;
+    top: 0.825rem;
+}
+
+.cost_list ul li:first-child p:last-child:before{
+    content: '';
+    display: inline-block;
+    position: absolute;
+    width: 0.15rem;
+    height: 0.15rem;
+    border-radius: 50%;
+    background: rgba(255,255,266,0.6);
+    right: 0px;
+    top: 1.125rem;
+}
+
+
+
+
+
+
+
+.cost_list ul li:nth-child(2) p:first-child:after{
+    content: '';
+    display: inline-block;
+    position: absolute;
+    width: 0.15rem;
+    height: 0.15rem;
+    border-radius: 50%;
+    background: rgba(255,255,266,0.6);
+    right: 0px;
+    top: 0.55rem;
+}
+.cost_list ul li:nth-child(2) p:first-child:before{
+    content: '';
+    display: inline-block;
+    position: absolute;
+    width: 0.15rem;
+    height: 0.15rem;
+    border-radius: 50%;
+    background: rgba(255,255,266,0.6);
+    right: 0px;
+    top: 0.825rem;
+}
+
+.cost_list ul li:nth-child(2) p:last-child:before{
+    content: '';
+    display: inline-block;
+    position: absolute;
+    width: 0.15rem;
+    height: 0.15rem;
+    border-radius: 50%;
+    background: rgba(255,255,266,0.6);
+    right: 0px;
+    top: 1.125rem;
+}
+
+.chart_text{ position:relative;
+    top: -0.25rem;}
+.chart_text ul{
+    width: 100%;
+    display: table;
+    box-sizing: border-box;
+    padding:  0 1.6rem;
+}
+.chart_text ul li{
+    display: table-cell;
+    font-size: 0.5rem;
+    text-align: center;
+    line-height: 0.7rem;
+}
+
+.chart_text ul li p:first-child{
+    color: #feb137;
+}
+
+.chart_text ul li p:nth-child(2){
+    color:#868686;
+}
+
+.chart_text ul li span{
+    display: inline-block;
+    height: 22px;
+    line-height: 22px;
+    padding:  0 8px;
+    border-radius: 10px;
+}
+.chart_text ul li span.active{
+
+    background: #f37a7a;
+    color: #fff;
+}
+
+.chart_title{
+    font-size: 0.5rem;
+    color: #ccc;
+    display: table;
+    width: 100%;
+    box-sizing: border-box;
+    padding:  0.75rem 0.5rem ;
+}
+
+.chart_title article{
+    display: table-cell;
+}
+.chart_title article.title i:first-child{
+    border-radius: 50%;
+    border:4px solid #444;
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.chart_title article.title .y{
+    border-radius: 50%;
+    border:4px solid #f9b549;
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    margin-left: 0.75rem;
+    vertical-align: middle;
+
+}
+.chart_title article:last-child{
+    text-align: right;
+}
+
+.chart_title article.title span{
+    margin-left: 0.25rem;
+}
+
+.chart_title article span{
+    vertical-align: middle;
+}
+
+.weekSlider{
+    margin-top:0.25rem ;
+    height: 5.5rem;
+    background: #f3f3f3;
+}
+
+.week_num ul{ display: table; width: 100%; padding:0.4rem 0.5rem 0 ; box-sizing: border-box;}
+.week_num ul li{ display: table-cell;text-align: center;  color: #444;}
+.week_num ul li p:first-child{
+    font-size: 1.25rem;
+    width: 2rem;
+    height: 2rem;
+    line-height: 2rem;
+    text-align: center;
+    display: inline-block;
+    border-radius: 50%;
+}
+.week_num ul li p.active{
+    background: #f9b549;
+    color: #fff;
+}
+
+.week_num ul li p:last-child{
+    font-size: 0.55rem;
+    padding-top: 0.1rem;
+}
+
+.swiper-pagination-bullet-active{
+    background: #f9b549 !important;
+}
+.swiper-container {
+    background: #f3f3f3;
+    height: 5.5rem;
+}

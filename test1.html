@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
+</head>
+<body>
+<style>
+    *{ margin: 0; padding: 0;}
+
+</style>
+
+<canvas style=" margin-top: 100px;" id="chart" ></canvas>
+
+<script>
+    var data = [
+        {
+            week:'wekk1',
+            max:3000,
+            real:3000
+        },
+        {
+            week:'wekk2',
+            max:2000,
+            real:0
+        },
+        {
+            week:'wekk3',
+            max:1000,
+            real:0
+        },
+        {
+            week:'wekk3',
+            max:1000,
+            real:0
+        }
+    ];
+
+
+    var chart = {
+
+        dpi:window.devicePixelRatio,
+        coordinates :[],
+        chart : document.getElementById('chart').getContext('2d'),
+        init:function () {
+            var __chart = document.getElementById('chart');
+            var w = document.body.offsetWidth;
+            var c_w = w;
+            var c_h = 250;
+
+            this.top = 30;
+
+            this.tableHeight = (200) * this.dpi;
+            this.width = __chart.width = c_w * this.dpi;
+            this.height = __chart.height = c_h * this.dpi;
+
+            __chart.style.width = c_w + 'px';
+            __chart.style.height =  c_h + 'px';
+
+            var  _this = this;
+
+            chart.animation(function () {
+                _this.drawTopCircle();
+            });
+
+        },
+        lenged : 5,
+        yLineLend : 4,
+        xLineLend : 7,
+        topLine :50,
+        radius:15,
+        draw : function (fn) {
+            this.chart.clearRect(0, 0, this.width, this.height);
+            this.drawTable();
+            fn&&fn();
+            this.drawimg();
+            this.drawCircle();
+        },
+        drawTopCircle : function () {
+
+            for (var i =0; i<data.length;i++){
+                var x = this.width/5*(i+1);
+                var y = this.topLine ;
+                this.chart.beginPath();
+                this.chart.strokeStyle = '#000'
+                this.chart.fillStyle = '#fff';
+                this.chart.lineWidth = 4;
+                this.chart.arc(x,y,this.radius,0,2*Math.PI);
+                this.chart.stroke();
+                this.chart.fill();
+                this.chart.closePath();
+            }
+
+        },
+        drawTable : function () {
+            var chart = this.chart;
+            var w = this.width;
+            var h = this.height;
+
+            chart.strokeStyle = 'red';
+            chart.lineWidth = 1;
+            for(var i =1 ;i<this.lenged;i++){
+                chart.moveTo((w/5*(i)) ,this.topLine);
+                chart.lineTo((w/5*(i)) ,h);
+            }
+            chart.stroke();
+
+            for(var i =0 ;i<this.xLineLend;i++){
+                chart.lineWidth = 1;
+                chart.moveTo( 0,((this.tableHeight/6)*(i))+this.topLine);
+                chart.lineTo(w, ((this.tableHeight/6)*(i))+this.topLine);
+            }
+            chart.stroke();
+
+
+        },
+        drawCircle : function () {
+            this.coordinates = [];
+            for (var i =0; i<data.length;i++){
+                var x = ~~(this.width/5*(i+1));
+                var y = this.currentHeight(data[i])
+                this.coordinates.push({x:x,y:y,id:i}); //储存坐标添
+                this.chart.beginPath();
+                this.chart.fillStyle = '#fff';
+                this.chart.lineWidth = 4;
+                this.chart.arc(x,y,this.radius,0,2*Math.PI);
+                this.chart.stroke();
+                this.chart.fill();
+                this.chart.closePath();
+            }
+
+        },
+        currentHeight : function (data) {
+            return this.tableHeight - ~~(data.real/data.max*this.tableHeight)+this.topLine
+        },
+        drawimg:function () {
+
+
+            var chart = this.chart;
+            chart.fillStyle = 'rgba(254,177,55,0.4)';
+            chart.strokeStyle = "rgba(254,177,55,1)";
+            chart.lineWidth = 5;
+            chart.beginPath();
+            var l = data.length + 1;
+            var width = this.width;
+            var height = this.tableHeight+this.topLine;
+
+            var old_X,old_Y,m_X1,m_Y1, m_X2,m_Y2, X = 0, Y =  height;
+            chart.moveTo(0,height);
+
+            for( var i =0; i<data.length;i++){
+
+                old_X = X;
+                old_Y = Y;
+
+                X = this.width/5*(i+1);
+                Y  = this.currentHeight(data[i]);
+
+                if(old_Y == Y){
+                    chart.lineTo(X,Y);
+
+                }else {
+
+                    m_X1 = ~~((X+old_X)/2);
+                    m_Y1 = old_Y-1;
+                    m_X2 = ~~((X+old_X)/2);
+                    m_Y2 = Y+1;
+                    chart.bezierCurveTo(
+                            m_X1,
+                            m_Y1,
+                            m_X2,
+                            m_Y2,
+                            X,
+                            Y
+                    );
+                }
+
+            }
+
+            old_X = X;
+            old_Y = Y;
+
+            X = width;
+            Y = height;
+            if(old_Y == Y){
+
+                chart.lineTo(X,Y)
+
+            }else {
+
+                m_X1 = ~~((X+old_X)/2);
+                m_Y1 = old_Y-1;
+                m_X2 = ~~((X+old_X)/2);
+                m_Y2 = Y+1;
+                chart.bezierCurveTo(
+                        m_X1,
+                        m_Y1,
+                        m_X2,
+                        m_Y2,
+                        X,
+                        Y
+                );
+            }
+
+            chart.stroke();
+            chart.lineTo(0, height);
+            chart.closePath();
+            chart.fill();
+
+
+        },
+        counter : 20,
+        animation : function (fn) {
+            fn  = fn || function () {};
+            var that = this;
+            var datas = (new Function('return '+JSON.stringify(data) ) )();
+            function resizedata(rata,i){
+                var temp = (new Function('return '+JSON.stringify(datas) ) )();
+                for (var i in temp)
+                {
+                    temp[i]['real'] *= rata;
+                }
+                return temp;
+            }
+            var i = 1;
+
+            function run(){
+                var tmp;
+                var timehelper;//如果需要清除 可以使用
+                data = resizedata(i/that.counter,i);
+                if(i<=that.counter){
+                    var s = null;
+                    if(i==that.counter){
+                        s = fn;
+                    }
+                    that.draw(s);
+                    tmp = Math.pow(1.5,i++);
+                    timehelper = setTimeout(run,250/tmp);
+
+                }else{
+                    data = (new Function('return '+JSON.stringify(data) ) )();
+                }
+            }
+            run();
+        },
+        point : function (x,y,fn) {
+            for(var i=0;i<this.coordinates.length;i++){
+
+                var c_x = Math.abs( x - chart.coordinates[i]['x'] );
+                var c_y = Math.abs( y - chart.coordinates[i]['y'] );
+                if(c_x <= chart.radius && c_y<= chart.radius){
+                    fn&&fn(chart.coordinates[i]);
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
+    chart.init();
+
+    document.getElementById('chart').addEventListener('click',function (e) {
+
+        var x = (e.pageX - this.offsetLeft) * chart.dpi;
+        var y = (e.pageY - this.offsetTop) * chart.dpi;
+        chart.point(x,y,function (data) {
+            console.log(data,'data')
+        })
+
+    },true);
+
+</script>
+
+</body>
+</html>

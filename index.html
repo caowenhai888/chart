@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script type="text/javascript">
+        if(/Android (\d+\.\d+)/.test(navigator.userAgent)){
+            var version = parseFloat(RegExp.$1);
+            if(version>2.3){
+                var phoneScale = parseInt(window.screen.width)/640;
+                document.write('<meta name="viewport" content="width=640,  target-densitydpi=device-dpi">');
+            }else{
+                document.write('<meta name="viewport" content="width=640, target-densitydpi=device-dpi">');
+            }
+        }else{
+            document.write('<meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">');
+        }
+
+    </script>
+    <link rel="stylesheet" href="./css/reset.css" type="text/css">
+    <link rel="stylesheet" href="./css/plugin/swiper.min.css" type="text/css">
+    <link rel="stylesheet" href="./css/cost_index.css" type="text/css">
+
+    <title>生活费管家</title>
+</head>
+<body>
+
+<section class="cost_head">
+    <article class="title">本周剩余生活费 (元) <a class="icon more" href="#">资金明细</a></article>
+    <h1>1,200.00</h1>
+    <article class="describe"> <span class="v_mid">到期后流入心愿计划</span><a href="#" class="cost_modify_btn">点击修改</a> </article>
+    <div class="cost_list">
+        <ul class="">
+            <li>
+                <p>4,000</p>
+                <p>本月存入</p>
+            </li>
+            <li>
+                <p>4,000</p>
+                <p>本周可取</p>
+            </li>
+            <li>
+                <p>4,000</p>
+                <p>本月已取</p>
+            </li>
+        </ul>
+    </div>
+
+</section>
+<div class="chart_title">
+    <article class="title">
+        <i class="h"></i><span>本周预算</span><i class="y"></i><span>本周花费</span>
+    </article>
+    <article>
+    单位：元
+    </article>
+</div>
+
+<canvas id="chart" height="540"></canvas>
+
+<div class="chart_text">
+    <ul>
+        <li>
+            <p>省钱指数 500%</p>
+            <p><span>WEEK 1</span></p>
+        </li>
+        <li>
+            <p>省钱指数 50%</p>
+            <p><span>WEEK 2</span></p>
+        </li>
+        <li>
+            <p>省钱指数 50%</p>
+            <p><span>WEEK 3</span></p>
+        </li>
+        <li>
+            <p>省钱指数 50%</p>
+            <p><span class="active">WEEK 4</span></p>
+        </li>
+    </ul>
+</div>
+
+
+<!-- Swiper -->
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide">
+            <div class="weekSlider">
+                <div class="title">
+                    <span>第三周</span> <span class="week">WEEK 3</span>
+                </div>
+                <div class="week_num">
+                    <ul>
+                        <li>
+                            <p class="active">10</p>
+                            <p>TUE</p>
+                        </li>
+                        <li>
+                            <p>11</p>
+                            <p>TUE</p>
+                        </li>
+                        <li>
+                            <p>12</p>
+                            <p>TUE</p>
+                        </li>
+                        <li>
+                            <p>13</p>
+                            <p>TUE</p>
+                        </li>
+                        <li>
+                            <p>10</p>
+                            <p>TUE</p>
+                        </li>
+                        <li>
+                            <p>10</p>
+                            <p>TUE</p>
+                        </li>
+                        <li>
+                            <p>10</p>
+                            <p>TUE</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <div class="weekSlider">
+                <div class="title">
+                    <span>第三周</span> <span class="week">WEEK 3</span>
+                </div>
+                <div class="week_num">
+                    <ul>
+                        <li>
+                            <p class="active">10</p>
+                            <p>TUE</p>
+                        </li>
+                        <li>
+                            <p>11</p>
+                            <p>TUE</p>
+                        </li>
+                        <li>
+                            <p>12</p>
+                            <p>TUE</p>
+                        </li>
+                        <li>
+                            <p>13</p>
+                            <p>TUE</p>
+                        </li>
+                        <li>
+                            <p>10</p>
+                            <p>TUE</p>
+                        </li>
+                        <li>
+                            <p>10</p>
+                            <p>TUE</p>
+                        </li>
+                        <li>
+                            <p>10</p>
+                            <p>TUE</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <div class="weekSlider">
+                <div class="title">
+                    <span>第三周</span> <span class="week">WEEK 3</span>
+                </div>
+                <div class="week_num">
+                    <ul>
+                        <li>
+                            <p class="active">10</p>
+                            <p>TUE</p>
+                        </li>
+                        <li>
+                            <p>11</p>
+                            <p>TUE</p>
+                        </li>
+                        <li>
+                            <p>12</p>
+                            <p>TUE</p>
+                        </li>
+                        <li>
+                            <p>13</p>
+                            <p>TUE</p>
+                        </li>
+                        <li>
+                            <p>10</p>
+                            <p>TUE</p>
+                        </li>
+                        <li>
+                            <p>10</p>
+                            <p>TUE</p>
+                        </li>
+                        <li>
+                            <p>10</p>
+                            <p>TUE</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <div class="weekSlider">
+                <div class="title">
+                    <span>第三周</span> <span class="week">WEEK 3</span>
+                </div>
+                <div class="week_num">
+                    <ul>
+                        <li>
+                            <p class="active">10</p>
+                            <p>TUE</p>
+                        </li>
+                        <li>
+                            <p>11</p>
+                            <p>TUE</p>
+                        </li>
+                        <li>
+                            <p>12</p>
+                            <p>TUE</p>
+                        </li>
+                        <li>
+                            <p>13</p>
+                            <p>TUE</p>
+                        </li>
+                        <li>
+                            <p>10</p>
+                            <p>TUE</p>
+                        </li>
+                        <li>
+                            <p>10</p>
+                            <p>TUE</p>
+                        </li>
+                        <li>
+                            <p>10</p>
+                            <p>TUE</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- Add Pagination -->
+    <div class="swiper-pagination"></div>
+</div>
+
+<div class="cost_btn">
+    <a href="#" class="btn submit ">取饭票</a>
+</div>
+
+
+
+<script src="./js/plugin/swiper/swiper.min.js"></script>
+<script src="./js/chart.js"></script>
+<script>
+
+    var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        paginationClickable: true
+    });
+
+</script>
+
+</body>
+</html>
